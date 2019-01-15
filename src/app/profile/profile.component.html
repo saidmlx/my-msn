@@ -1,0 +1,60 @@
+<div id="profileContainer">
+  <div class="container pato45">
+    <div class="row">
+      <div class="col-md-3">
+        <div  class="avatarFrame{{user.status}}" *ngIf="user">
+          <img  [src]="croppedImage || user.avatar || 'assets/img/generic_avatar.png'" class="avatarImage img-fluid">
+        </div>
+        <hr/>
+        <div>
+          <span>Cambiar Foto</span><br />
+          <label class="custom-file-upload">
+            <input type="file" (change)="fileChangeEvent($event)">
+            Subir Avatar
+          </label>
+        </div>
+      </div>
+      <div *ngIf="user" class="col-md-9">
+
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="1 / 1"
+          [resizeToWidth]="128"
+          format="png"
+          (imageCroppedBase64)="imageCropped($event)"
+          (imageLoaded)="imageLoaded()"
+          (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+
+        <div>
+          <label fixed >Nick</label>
+          <input [(ngModel)]="user.nick" type="text"class="form-control" />
+        </div>
+        <div>
+          <label fixed >Subnick</label>
+          <input [(ngModel)]="user.subnick" type="text"class="form-control" />
+        </div>
+        <div>
+          <label fixed >Personal Message</label>
+          <input [(ngModel)]="user.personal_message" type="text"class="form-control" />
+        </div>
+        <div>
+          <label fixed >Email</label>
+          <input [(ngModel)]="user.email" type="email" disabled class="form-control" />
+        </div>
+        <div>
+          <label fixed >Status</label>
+          <select [(ngModel)]="user.status" class="form-control">
+            <option value="Online">Conectado</option>
+            <option value="Away">Ausente</option>
+            <option value="Busy">Ocupado</option>
+            <option value="Appear_offline">Desconectado</option>
+          </select>
+        </div>
+        <hr />
+        <a (click)="save()"  class="btn btn-primary btn-block">Guardar</a>
+      </div>
+    </div>
+  </div>
+</div>

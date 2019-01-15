@@ -1,0 +1,64 @@
+<div id="homeContainer">
+  <div class="whiteBorderGlassBox">
+    <div class="homeHeadContainer">
+      <div class="row" *ngIf="user">
+        <div class="col-md-auto">
+          <div   class="avatarFrame{{user.status}}">
+            <img [src]="user.avatar || 'assets/img/generic_avatar.png' " id="homeAvatarPicture">
+          </div>
+        </div>
+        <div class="col">
+          <b>{{user.nick}}</b>
+          <div>
+            <span>{{user.status}}</span>
+            <br />
+            <span>  {{user.personal_message}}  </span>
+            <a (click) = "logout()"   >Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="whiteContainerPadded marto15">
+
+    <div class="row">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Buscar Amigo" [(ngModel)]="query" />
+      </div>
+      <div class="col-md-auto">
+        <img src="assets/img/logo_live_add.png" class="icon" alt="" (click)="open(content)" >
+      </div>
+    </div>
+    <hr />
+
+    <b *ngIf="user && user.friends" >Amigos ({{user.friends.length}} / {{user.friends.length}})</b>
+    <div *ngIf="user && user.friends">
+      <div *ngFor="let user of user.friends | search: query; let i = index" class="disblo marbo5">
+      </div>
+        <app-contact  *ngFor="let user of user.friends | search: query; let i = index" [uid]= "user" ></app-contact>
+    </div>
+  </div>
+
+
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Agregar Amigo</h4>
+      <button type="button" class="close" aria-label="Close" >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="">
+        <b>Ingresa el email de tu amigo</b>
+        <input type="email" class="form-control" placeholder="Email" [(ngModel)]="friendEmail" (keyup.enter)="sendRequest()">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="sendRequest()">Guardar</button>
+    </div>
+  </ng-template>
+

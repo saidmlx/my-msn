@@ -1,0 +1,6 @@
+.loginContainer{
+  background-image: url('/assets/img/msnbg.jpg');
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
